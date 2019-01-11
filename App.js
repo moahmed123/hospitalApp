@@ -7,8 +7,6 @@ import thunk from 'redux-thunk';
 import reducers from './dist/reducers';
 import Main from './dist/components/Main';
 
-import {View} from 'react-native';
-
 const store = createStore(reducers, {}, compose(applyMiddleware( thunk )));
 
 //type Props = {};
@@ -16,10 +14,8 @@ const store = createStore(reducers, {}, compose(applyMiddleware( thunk )));
 export default class App extends Component {
   render() {
     return (
-      <Provider store={ store }>
-        <View>             
-          <Main/>
-        </View>
+      <Provider store={ store }>                    
+          <Main/>        
       </Provider>
     );
   }
