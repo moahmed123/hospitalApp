@@ -4,6 +4,9 @@ import * as actionCreatores from './../actions';
 import { Container, Spinner, View, Header, Card, CardItem, Title, Content, SwipeRow,Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
 
 class Main extends Component{  
+    static navigationOptions = {
+        header: null,   
+    };
     componentDidMount(){
         {this.props.NumberOpenedPage()}
     }
@@ -204,11 +207,9 @@ class Main extends Component{
         );
       }
 }
-
 function mapStateToProps( state ){
     return{
         AllData : state.Result 
     }
 }
-
 export default connect ( mapStateToProps, actionCreatores )( Main );
