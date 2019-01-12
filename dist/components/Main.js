@@ -5,7 +5,7 @@ import { Container, Spinner, View, Header, Card, CardItem, Title, Content, Swipe
 
 class Main extends Component{  
     static navigationOptions = {
-        header: null,   
+        header: null
     };
     componentDidMount(){
         {this.props.NumberOpenedPage()}
