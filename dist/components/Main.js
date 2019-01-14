@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {BackHandler} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../actions';
 import { Container, Spinner, View, Header, Card, CardItem, Title, Content, SwipeRow,Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
@@ -8,7 +9,14 @@ class Main extends Component{
         header: null
     };
     componentDidMount(){
-        {this.props.NumberOpenedPage()}
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        {this.props.NumberOpenedPage()}        
+    }
+    componentWillUnmount() {
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+    }  
+    handleBackPress = () => {      
+      BackHandler.exitApp(); // To Exit App.      
     }
     render() {                
         if ( !this.props.AllData ){
