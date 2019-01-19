@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import {BackHandler} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../../actions';
-import { Container, Spinner, View, Header, Card, CardItem, Title, Content, SwipeRow,Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import { Container, Spinner, View, Card, CardItem, Content, SwipeRow,Button,Body, Icon, Text } from 'native-base';
 import AppHeader from "./../AppHeader";
-import AppFooter from "./../AppFooter";
 
 class List extends Component{  
     static navigationOptions = {
@@ -18,7 +17,7 @@ class List extends Component{
       BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }  
     handleBackPress = () => {      
-      BackHandler.exitApp(); // To Exit App.      
+      //BackHandler.exitApp(); // To Exit App.      
     }
     render() {                
         if ( !this.props.AllData ){
@@ -32,7 +31,7 @@ class List extends Component{
         }
         return (
             <Container>
-                <AppHeader/>
+                <AppHeader Navigation = {this.props.navigation}/>
                 <Content style={{textAlign: 'right', direction:"rtl"}}>            
               <SwipeRow
                 leftOpenValue={75}
@@ -195,8 +194,7 @@ class List extends Component{
                     </Body>
                   </CardItem>
                 </Card>                                           
-            </Content>
-                {/* <AppFooter Navigation = {this.props.navigation}/> */}
+            </Content>                
             </Container>                        
         );
       }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Container, Content, Text } from 'native-base';
 import AppHeader from "./../AppHeader";
-import AppFooter from "./../AppFooter";
 
 class Destination extends Component {
   static navigationOptions = {
@@ -10,11 +9,10 @@ class Destination extends Component {
   render() {
     return (      
         <Container>              
-          <AppHeader/>
+          <AppHeader Navigation = {this.props.navigation}/>
           <Content>
-            <Text style={{ paddingTop: 60}}> Map Page </Text>            
-          </Content>
-          <AppFooter Navigation = {this.props.navigation}/>
+            <Text style={{ paddingTop: 60}}> Map Page </Text>             
+          </Content>          
         </Container>
     );
   }
