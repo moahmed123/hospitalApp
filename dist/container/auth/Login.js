@@ -36,8 +36,8 @@ class Login extends  React.Component {
     };
     render() {
       return (
-        <Root>
-            <Container style={{ flex: 1, justifyContent: "center" }}>                        
+        <Root>            
+            <Container style={{ flex: 1, justifyContent: "center" }} androidStatusBarColor="#16a085">
                 <Grid style={{flex:1}}>
                     <Row style={{flex:1}}></Row>    
                     <Row style={{flex:4}} >

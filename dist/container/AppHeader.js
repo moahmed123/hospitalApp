@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {Header, Left, Button, Icon, Body, Title, Right } from 'native-base';
+import {Header, Button, Icon, Body, Title, Right } from 'native-base';
 
 class AppHeader extends Component {
   render() {
     return (      
-        <Header>            
+        <Header style={{backgroundColor:"#16a085"}} androidStatusBarColor="#16a085"> 
             <Body>
                 <Title>Logo</Title>
             </Body>
