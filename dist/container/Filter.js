@@ -8,9 +8,12 @@ class Filter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          selected: "key2",
-          selected2: ""
+           search: "",
+           selected: "all",
+           selected2: "5000"
         };
+        this.submitForm = this.submitForm.bind(this);
+        this.InputSearch = this.InputSearch.bind(this);
       }
       onValueChange(value) {
          this.setState({
@@ -22,13 +25,23 @@ class Filter extends Component {
            selected2: value
          });
       }
+      InputSearch(text){
+         this.setState({ search: text })         
+      }
+      submitForm(){         
+         console.log(
+            "cate :" + this.state.selected +
+             "     " + " nearBy :" + 
+             this.state.selected2 + 
+             "     " + " nearBy :" + this.state.search);         
+      }      
     render() {
         return (
             <Container style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', backgroundColor:"#16a085"}}>
                <Content style={{textAlign: 'right', direction:"rtl", backgroundColor:"#fff", marginHorizontal: "5%", borderRadius: 5, padding: 20}}>
                   <Form>
                      <Item>                        
-                        <Input placeholder='بحث بأسم المستشفى'/>
+                        <Input type = 'text' placeholder='بحث بأسم المستشفى' onChangeText = {this.InputSearch}/>
                         <Icon active name='search-location' type="FontAwesome5" style={{fontSize:20}}/>
                      </Item>
 
@@ -70,7 +83,10 @@ class Filter extends Component {
                         <Picker.Item label="" value="" />
                      </Picker>
                     
-                     <Button rounded block style={{marginHorizontal: '35%', marginTop:40}}>
+                     <Button rounded block 
+                        style={{marginHorizontal: '35%', marginTop:40}}
+                        onPress ={this.submitForm}
+                        >
                         <Text style={{fontSize: 18}}>بحث</Text>
                      </Button>
                   </Form>             
