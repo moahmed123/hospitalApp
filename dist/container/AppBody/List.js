@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BackHandler,TouchableOpacity} from 'react-native';
+import {BackHandler,AsyncStorage} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../../actions';
 import { Container, Spinner, Card, CardItem, Content,Body, Text } from 'native-base';
@@ -11,7 +11,15 @@ class List extends Component{
     };
     componentDidMount(){
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        {this.props.NumberOpenedPage()}        
+        {this.props.NumberOpenedPage()} 
+        AsyncStorage.getItem('app_token')
+         .then(token => {
+            if (token) {
+               console.log(token);
+            }else {
+               console.log("no token");
+            }
+         });       
     }
     componentWillUnmount() {
       BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);

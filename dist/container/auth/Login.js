@@ -11,6 +11,7 @@ require('core-js/fn/map');
 require('core-js/fn/set');
 require('core-js/fn/array/find');
 
+
 class Login extends  React.Component {
     constructor(props){
         super(props);
@@ -19,17 +20,21 @@ class Login extends  React.Component {
             pass: '',
             showToast: false
         }
+        this.Login = this.Login.bind(this);
     }        
     Login(email, pass) {    
         try {
             firebase.auth()
-                .signInWithEmailAndPassword(email.trim(), pass)
-                .then((DataUser) => console.log(DataUser))
+                .signInWithEmailAndPassword(email.trim(), pass)                
+                .then((user) => {
+                    const  tonkenValue =  user['user']['refreshToken'];
+                    console.log(tonkenValue);
+                })
                 .catch((error)=>{alert(error.toString())});
             // Navigate to the Home page    
         } catch (error) {
             console.log(error.toString())
-        }    
+        }            
     }   
     static navigationOptions = {
         header: null,   
@@ -50,7 +55,9 @@ class Login extends  React.Component {
                             </Item>
                             <Item floatingLabel last>
                                 <Label>Password</Label>
-                                <Input onChangeText={(Password)=>{
+                                <Input  
+                                    secureTextEntry                                     
+                                    onChangeText={(Password)=>{
                                     this.setState({pass: Password});
                                 }}/>
                             </Item>
