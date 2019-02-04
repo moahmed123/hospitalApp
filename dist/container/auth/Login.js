@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Form, Item, Label, Input, Button, Text, Icon, Toast, Root} from 'native-base';
 import { Row, Grid } from 'react-native-easy-grid';
+import {AsyncStorage} from 'react-native';
 import * as firebase from "firebase";
 import './ConnectFirebase';
 // symbol polyfills
@@ -27,12 +28,13 @@ class Login extends  React.Component {
             firebase.auth()
                 .signInWithEmailAndPassword(email.trim(), pass)                
                 .then((user) => {
-                    const  tonkenValue =  user['user']['refreshToken'];
-                    console.log(tonkenValue);
+                    const  token =  user['user']['refreshToken'];                    
+                    AsyncStorage.setItem('app_token',token).then(() => {
+                        this.props.navigation.navigate('Splash');
+                    });
                 })
-                .catch((error)=>{alert(error.toString())});
-            // Navigate to the Home page    
-        } catch (error) {
+                .catch((error)=>{alert(error.toString())});            
+        }catch(error) {
             console.log(error.toString())
         }            
     }   

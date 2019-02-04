@@ -3,6 +3,7 @@ import Login from '../container/auth/Login';
 import SignUp from '../container/auth/SignUp';
 import TabNavigator from './TabNavigator';
 import Filter from './../container/Filter';
+import Splash from './../container/auth/Splash';
 
 const RootStack = createStackNavigator({    
   Login:{
@@ -19,7 +20,8 @@ const RootStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  }
+  },
+  Splash :{screen: Splash}
 },
 {
   initialRouteName: "Login"
