@@ -5,26 +5,25 @@ import TabNavigator from './TabNavigator';
 import Filter from './../container/Filter';
 import Splash from './../container/auth/Splash';
 
-const RootStack = createStackNavigator({    
-  Login:{
-    screen: Login
-  },
-  SignUp:{
-    screen: SignUp
-  },
-  Filter:{
-    screen: Filter
-  },
-  Home: {
-    screen: TabNavigator,
-    navigationOptions: {
-      header: null
-    }
-  },
-  Splash :{screen: Splash}
+const RootStack = createStackNavigator({
+
+   Login:{screen: Login},
+
+   SignUp:{screen: SignUp},
+
+   Filter:{screen: Filter},
+
+   Splash :{screen: Splash},
+
+   Home: {
+      screen: TabNavigator,
+      navigationOptions: {
+         header: null
+      }
+   }  
 },
 {
-  initialRouteName: "Login"
-}
-);
+   initialRouteName: "Splash"
+});
+
 export default createAppContainer(RootStack);

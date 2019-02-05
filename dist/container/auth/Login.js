@@ -28,10 +28,20 @@ class Login extends  React.Component {
             firebase.auth()
                 .signInWithEmailAndPassword(email.trim(), pass)                
                 .then((user) => {
-                    const  token =  user['user']['refreshToken'];                    
-                    AsyncStorage.setItem('app_token',token).then(() => {
-                        this.props.navigation.navigate('Splash');
-                    });
+                    const  token =  user['user']['refreshToken'];   
+                    const  email =  user['user']['email'];   
+                    console.log(user);
+                    console.log(token);
+                    console.log(email);
+                    AsyncStorage.multiSet([
+                        ["app_Token", token],
+                        ["email_user", email]
+                    ]).then(()=>{
+                        this.props.navigation.navigate('Home');
+                    })
+                    // AsyncStorage.setItem('app_token',token).then(() => {
+                        
+                    // });
                 })
                 .catch((error)=>{alert(error.toString())});            
         }catch(error) {

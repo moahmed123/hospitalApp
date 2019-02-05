@@ -1,12 +1,36 @@
 import React, { Component } from 'react';
+import {AsyncStorage} from 'react-native';
 import {Header, Button, Icon, Body, Title, Right } from 'native-base';
 
 class AppHeader extends Component {
+    constructor(props){
+        super(props);     
+        this.state = {
+            emaillenght : ''
+        }
+    }
+    componentDidMount(){
+        // Get Email User. 
+        AsyncStorage.multiGet(['email_user']).then((data) => {            
+            let email = data[0][1];            
+            if (email !== null){
+                this.setState({
+                    emaillenght: email.slice(0,2)
+                });
+            }                
+        });                                
+    }
   render() {
     return (      
         <Header style={{backgroundColor:"#16a085"}} androidStatusBarColor="#16a085"> 
             <Body>
-                <Title>Logo</Title>
+                <Title style={{
+                    backgroundColor: "#fff",
+                    borderRadius: 60/2, width: 40, height: 40, 
+                    color: "#16a085", textAlign:"center", fontSize: 15, paddingTop: 9
+                }}>
+                    {this.state.emaillenght}
+                </Title>
             </Body>
             <Right>
                 <Button transparent onPress={()=> this.props.Navigation.navigate('Filter')}>

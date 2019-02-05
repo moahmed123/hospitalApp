@@ -3,15 +3,15 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import {Icon} from 'native-base';
 import List from './../container/AppBody/List';
 import Destination from './../container/AppBody/Destination';
+import Profile from './../container/AppBody/Profile';
 
 const Tab = createBottomTabNavigator(
     {
-        List: {
-            screen : List
-        },
-        Destination : {
-            screen: Destination
-        }
+        List: {screen : List},
+
+        Destination : {screen: Destination},
+
+        Profile:{screen: Profile}
     },
     {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -25,6 +25,10 @@ const Tab = createBottomTabNavigator(
 
         } else if (routeName === 'Destination') {
             iconName = "map-marked-alt";
+            iconType = "FontAwesome5";
+
+        } else if (routeName === 'Profile') {
+            iconName = "user-tie";
             iconType = "FontAwesome5";
         }
         // You can return any component that you like here!

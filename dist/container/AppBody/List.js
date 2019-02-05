@@ -1,79 +1,81 @@
 import React, { Component } from 'react';
-import {BackHandler,AsyncStorage} from 'react-native';
+import { BackHandler, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../../actions';
-import { Container, Spinner, Card, CardItem, Content,Body, Text } from 'native-base';
+import { Container, Spinner, Card, CardItem, Content, Body, Text } from 'native-base';
 import AppHeader from "./../AppHeader";
 
-class List extends Component{  
+class List extends Component {
     static navigationOptions = {
         header: null
     };
-    componentDidMount(){
+    componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        {this.props.NumberOpenedPage()} 
-        AsyncStorage.getItem('app_token')
-         .then(token => {
+        { this.props.NumberOpenedPage() }
+        //Will Removed 
+        AsyncStorage.multiGet(['app_Token']).then((data) => {
+            let token = data[0][1];
+
             if (token) {
-               console.log(token);
-            }else {
-               console.log("no token");
+                console.log(token);
+            } else {
+                console.log("no token");
             }
-         });       
+        });     
     }
     componentWillUnmount() {
-      BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-    }  
-    handleBackPress = () => {      
-      //BackHandler.exitApp(); // To Exit App.         
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
-    onClickFun(){
-      this.props.navigation.navigate('filter');
-      console.log('ada')
+    handleBackPress = () => {
+        //BackHandler.exitApp(); // To Exit App.         
     }
-    render() {                
-        if ( !this.props.AllData ){
+    onClickFun() {
+        this.props.navigation.navigate('filter');
+        console.log('ada')
+    }
+    render() {
+        if (!this.props.AllData) {
             return (
-              <Container>              
-                <Content>
-                  <Spinner />                
-                </Content>
-              </Container>
+                <Container>
+                    <Content>
+                        <Spinner />
+                    </Content>
+                </Container>
             );
         }
         return (
             <Container>
-               <AppHeader Navigation = {this.props.navigation}/>
-               <Content style={{textAlign: 'right', direction:"rtl"}}>
-                  <Card>
-                     <CardItem>
-                        <Body style={{textAlign: 'right', direction:"rtl", width:"100%"}}>
-                           <Text style={{textAlign: 'right', direction:"rtl", width:"100%", fontWeight: "600"}}>
-                                 {this.props.AllData["hotels"][0]['name']} 
-                           </Text>
-                           <Text style={{textAlign: 'right', direction:"rtl", width:"100%"}}> 
-                                 {this.props.AllData["hotels"][0]['details']} 
-                           </Text>
-                           <Text style={{textAlign: 'right', direction:"rtl", width:"100%"}}>
-                              {this.props.AllData["hotels"][0]['categories']} 
-                           </Text>
-                           <Text style={{textAlign: 'right', direction:"rtl", width:"100%"}}>
-                              +02 {this.props.AllData["hotels"][0]['phone']} 
-                           </Text>
-                           <Text style={{textAlign: 'right', direction:"rtl", width:"100%"}}>
-                              {this.props.AllData["hotels"][0]['city']} 
-                           </Text>
-                        </Body>
-                     </CardItem>
-                  </Card>                                 
-               </Content>                
-            </Container>                        
+                <AppHeader Navigation={this.props.navigation} />
+                <Content style={{ textAlign: 'right', direction: "rtl" }}>
+                    <Card>
+                        <CardItem>
+                            <Body style={{ textAlign: 'right', direction: "rtl", width: "100%" }}>
+                                <Text style={{ textAlign: 'right', direction: "rtl", width: "100%", fontWeight: "600" }}>
+                                    {this.props.AllData["hotels"][0]['name']}
+                                </Text>
+                                <Text style={{ textAlign: 'right', direction: "rtl", width: "100%" }}>
+                                    {this.props.AllData["hotels"][0]['details']}
+                                </Text>
+                                <Text style={{ textAlign: 'right', direction: "rtl", width: "100%" }}>
+                                    {this.props.AllData["hotels"][0]['categories']}
+                                </Text>
+                                <Text style={{ textAlign: 'right', direction: "rtl", width: "100%" }}>
+                                    +02 {this.props.AllData["hotels"][0]['phone']}
+                                </Text>
+                                <Text style={{ textAlign: 'right', direction: "rtl", width: "100%" }}>
+                                    {this.props.AllData["hotels"][0]['city']}
+                                </Text>
+                            </Body>
+                        </CardItem>
+                    </Card>
+                </Content>
+            </Container>
         );
-      }
-}
-function mapStateToProps( state ){
-    return{
-        AllData : state.Result 
     }
 }
-export default connect ( mapStateToProps, actionCreatores )( List );
+function mapStateToProps(state) {
+    return {
+        AllData: state.Result
+    }
+}
+export default connect(mapStateToProps, actionCreatores)(List);
