@@ -37,9 +37,9 @@ class SignUp extends  React.Component {
             console.log(error.toString())
         }
     }       
-    static navigationOptions = {
-        header: null,   
-    };
+    // static navigationOptions = {
+    //     header: null,   
+    // };
     render() {
       return (
         <Root>

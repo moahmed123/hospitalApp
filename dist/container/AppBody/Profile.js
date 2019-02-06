@@ -38,7 +38,7 @@ class Profile extends Component {
     _logOutUser() {        
         try {            
             firebase.auth().signOut().then(() => {
-                AsyncStorage.removeItem('app_token').then(()=>{                    
+                AsyncStorage.multiRemove(['app_Token','email_user']).then(()=>{                    
                     this.props.navigation.navigate("Login");                    
                 });                               
             });                                             

@@ -11,7 +11,8 @@ class Splash extends Component {
 	};	
 	componentDidMount(){		
 		AsyncStorage.multiGet(['app_Token']).then((data) => {
-            let Token = data[0][1];            
+			const Token = data[0][1];
+			console.log(Token);
 			if(Token){								
 				this._delayLoading('Home');				
 			}else{				
