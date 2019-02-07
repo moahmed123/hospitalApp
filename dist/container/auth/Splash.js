@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {View, Text, AsyncStorage} from 'react-native';
+import {View,AsyncStorage, StatusBar} from 'react-native';
+import {Thumbnail} from 'native-base';
 
 class Splash extends Component {
 	constructor(props){
@@ -27,8 +28,15 @@ class Splash extends Component {
 	} 
   	render() {
     	return (
-	      <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', backgroundColor:"#16a085"}}> 
-	            <Text> Splash Page </Text>
+	      <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', backgroundColor:"#fafafa"}}> 
+		  	<StatusBar backgroundColor="#16a085" barStyle="light-content" />
+	            <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 20 }}>
+					<Thumbnail
+						square large
+						style={{ resizeMode: 'contain', width: 150, height: 130 }}
+						source={require('./../../src/hospital-icon.png')}
+					/>
+				</View>
 	        </View>
     	);
   	}
