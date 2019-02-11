@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Form, View, Item, Label, Input, Button, Text, Icon, Thumbnail, Root, Content } from 'native-base';
+import { Container, Form, View, Item, Label, Input, Button, Text, Icon, Thumbnail, Content, Spinner } from 'native-base';
 import { AsyncStorage, ImageBackground, StatusBar } from 'react-native';
 import * as firebase from "firebase";
 import './ConnectFirebase';
@@ -18,15 +18,33 @@ class Login extends React.Component {
         this.state = {
             user: '',
             pass: '',
-            showToast: false
+            showToast: false,
+            loading:  false
         }
         this.Login = this.Login.bind(this);
+        this.loadingButton = this.loadingButton.bind(this);
+    }
+    componentDidMount(){        
+        AsyncStorage.multiGet(['email_user']).then((data) => {            
+            let email = data[0][1];  
+            console.log(email);
+            if (email !== null){
+                this.setState({
+                    user: email
+                });
+            }                
+        }); 
     }
     Login(email, pass) {
         try {
             firebase.auth()
                 .signInWithEmailAndPassword(email.trim(), pass)
                 .then((user) => {
+                    // Loading Button 
+                    this.setState({
+                        loading: true
+                    })    
+                    // Save Token && Email               
                     const token = user['user']['refreshToken'];
                     const email = user['user']['email'];
                     AsyncStorage.multiSet([
@@ -41,6 +59,15 @@ class Login extends React.Component {
             console.log(error.toString())
         }
     }
+    // Function Loading When Login 
+    loadingButton(){
+        if ( this.state.loading == false){            
+            return <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} />             
+        }else{
+            return <Spinner color='#fafafa' style={{ fontSize: 25, opacity: .6 }}  />
+        }
+                    
+    }
     static navigationOptions = {
         header: null,
     };
@@ -51,8 +78,9 @@ class Login extends React.Component {
                 style={{ resizeMode: 'cover', flex: 1 }}
             >
              <StatusBar backgroundColor="#16a085" barStyle="light-content" />
+             {/* , */}
                 <Container style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: "rgba(242, 242, 242, 0.84)" }}>
-                    <Content style={{ padding: 20 }}>
+                    <Content style={{ padding: 20,}}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 20 }}>
                             <Thumbnail
                                 square large
@@ -65,7 +93,8 @@ class Login extends React.Component {
                                 <Label>Username</Label>
                                 <Input onChangeText={(user) => {
                                     this.setState({ user: user });
-                                }} />
+                                }}
+                                value={this.state.user} />
                             </Item>
                             <Item floatingLabel>
                                 <Label>Password</Label>
@@ -80,23 +109,24 @@ class Login extends React.Component {
                                 onPress={() => this.Login(this.state.user, this.state.pass)}
                                 style={{ marginTop: 45, backgroundColor: '#16a085', marginHorizontal: "15%" }}
                             >
-                                <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} />
-                                {/* <Text style={{ color: "#fff" }}>Login</Text> */}
-                            </Button>
-
+                               {/* <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} /> */}
+                               {this.loadingButton()}
+                            </Button>                           
+                        </Form>                                               
+                        <View style={{marginHorizontal: '10%', marginTop: 15}}>
                             <Button
                                 hasText transparent
                                 onPress={() => this.props.navigation.navigate('SignUp')}
-                                style={{ marginTop: 5, textAlign: 'center' }}
+                                style={{ marginTop: 5 }}
                             >
-                                <Text style={{ color: "#aaa", fontSize: 13 }}>
+                                <Text style={{ color: "#aaa", fontSize: 13, textAlign: 'center' }}>
                                     Don't have an account?
                                         <Text style={{ color: "#16a085", fontSize: 13 }}> SINGUP </Text>
                                 </Text>
                             </Button>
-                        </Form>
-                    </Content>
-                </Container>
+                        </View>     
+                    </Content>                                   
+                </Container>                
             </ImageBackground>
         );
     }

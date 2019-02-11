@@ -17,7 +17,8 @@ class Profile extends Component {
         super(props);
         this._logOutUser = this._logOutUser.bind(this);
         this.state = {
-            emailUser : 'Your E_mail'
+            emailUser : 'Your E_mail',
+            name: ''
         }
     }
     static navigationOptions = {
@@ -25,11 +26,13 @@ class Profile extends Component {
     };
     componentDidMount(){
         // Get Email User. 
-        AsyncStorage.multiGet(['email_user']).then((data) => {            
-            let email = data[0][1];            
+        AsyncStorage.multiGet(['email_user',"name_user_singup"]).then((data) => {            
+            let email = data[0][1];
+            let userName = data[1][1];            
             if (email !== null){
                 this.setState({
-                    emailUser: email
+                    emailUser: email,
+                    name: userName
                 });
             }                
         });                                
@@ -38,7 +41,7 @@ class Profile extends Component {
     _logOutUser() {        
         try {            
             firebase.auth().signOut().then(() => {
-                AsyncStorage.multiRemove(['app_Token','email_user']).then(()=>{                    
+                AsyncStorage.multiRemove(['app_Token']).then(()=>{                    
                     this.props.navigation.navigate("Login");                    
                 });                               
             });                                             
@@ -51,6 +54,9 @@ class Profile extends Component {
             <Container>
                 <AppHeader Navigation={this.props.navigation} />
                 <Content style = {{flex:1, backgroundColor: '#eee'}}>                                   
+                    <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5}}>
+                        Your Name : { this.state.name }
+                    </Text>
                     <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5}}>
                         Your Email : { this.state.emailUser }
                     </Text> 
