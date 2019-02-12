@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import {Icon} from 'native-base';
-import List from './../container/AppBody/List';
+import Result from '../container/AppBody/Result';
 import Destination from './../container/AppBody/Destination';
 import Profile from './../container/AppBody/Profile';
 
 const Tab = createBottomTabNavigator(
     {
-        List: {screen : List},
+        List: {screen : Result},
 
         Destination : {screen: Destination},
 

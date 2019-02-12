@@ -29,10 +29,12 @@ class SignUp extends React.Component {
                 {
                     // save UserName && Email For User 
                     const name_user_singup = this.state.username;
-                    const email_user_singup = this.state.email;                    
+                    const email_user_singup = this.state.email;  
+                    // Frist Remove All Data From Mobile. 
+                    AsyncStorage.multiRemove(['name_user_singup','email_user']);                   
                     AsyncStorage.multiSet([                        
                         ["name_user_singup", name_user_singup],
-                        ["email_user_singup", email_user_singup]
+                        ["email_user", email_user_singup]
                     ]).then(() => {                        
                         Toast.show({
                             text: "Done registration",
