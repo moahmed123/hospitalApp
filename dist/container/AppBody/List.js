@@ -26,11 +26,12 @@ class List extends Component {
                             <Icon name='location' type='Entypo' style={{color: '#34495e', fontSize: 20}}/>
                         </View>    
                     </View>
+                    {/* Three Box Color Background Data */}
                     <Text style={{ 
                         textAlign: 'right', direction: "rtl",
                         backgroundColor: "#3498db", color: "#fff", 
                         paddingVertical: 5, paddingHorizontal:10,
-                        borderRadius: 5, marginRight: 5, marginTop: 5,
+                        borderRadius: 5, marginRight: 5, marginTop: 5,fontSize: 14
                         }}>
                         {this.props.AllData['categories']}
                     </Text>                    
@@ -41,16 +42,17 @@ class List extends Component {
                         borderRadius: 5,marginRight: 5, marginTop: 5
                         }}>
                         <Icon type="FontAwesome" name="phone" style={{color: '#fff',fontSize: 15}}/>
-                        <Text style={{color: '#fff'}}>  +02 {this.props.AllData['phone']}</Text>                        
+                        <Text style={{color: '#fff', fontSize: 14}}> {this.props.AllData['phone']}</Text>                        
                     </Text>
                     <Text style={{ 
                         textAlign: 'right', direction: "rtl",
                         backgroundColor:"#9b59b6", color: "#fff",
                         paddingVertical: 5, paddingHorizontal:10, width: null,
-                        borderRadius: 5, marginTop: 5
+                        borderRadius: 5, marginTop: 5, fontSize: 14
                         }}>
                         {this.props.AllData['city']}
                     </Text>                    
+                    {/* Three Box Color Background Data */}
                 </Body>
             </CardItem>
         </Card>

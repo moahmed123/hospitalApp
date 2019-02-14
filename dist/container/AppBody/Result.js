@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { BackHandler, AsyncStorage } from 'react-native';
+import { BackHandler, PermissionsAndroid, View ,Text} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from '../../actions';
-import { Container, Spinner, Card, CardItem, Content, Body, Text } from 'native-base';
+import { Container, Spinner, Content, Button} from 'native-base';
 import AppHeader from "../AppHeader";
 import List from "./List";
 
@@ -12,10 +12,12 @@ class Result extends Component {
     };
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        { this.props.NumberOpenedPage() }           
+        { this.props.NumberOpenedPage() }    
+        {this._requestLocationPermission()}         
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+
     }
     handleBackPress = () => {
         //BackHandler.exitApp(); // To Exit App.         
@@ -35,19 +37,46 @@ class Result extends Component {
                 </Container>
             );
         }
-        return this.props.AllData["hotels"].map((data, i)=>{
+        return this.props.AllData["hospital"].map((data, i)=>{
             return(
                 <List key = {i} AllData = {data}/>            
             );
         })
+    }
+    _requestLocationPermission(){            
+        try {
+            const granted = PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                title: 'Cool Photo App ACCESS_FINE_LOCATION Permission',
+                message:
+                  'Cool Photo App needs access to your ACCESS_FINE_LOCATION ' +
+                  'so you can take awesome pictures.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              alert('You can use the ACCESS_FINE_LOCATION');
+
+            } else {
+                alert('ACCESS_FINE_LOCATION permission denied');
+            }
+          } catch (err) {
+            console.warn(err);
+          }                
     }
     render() {        
         return (
             <Container>
                 <AppHeader Navigation={this.props.navigation} />
                 <Content style={{ textAlign: 'right', direction: "rtl"}}>
-                    {this._ShowAllData()}                    
-                </Content>
+                    {this._ShowAllData()}
+                    <Button style={{width: "100%"}} onPress={()=> this._requestLocationPermission()}>
+                        <Text style={{color: "#fff"}}>Location</Text>
+                    </Button>                    
+                </Content>                                
             </Container>
         );
     }
