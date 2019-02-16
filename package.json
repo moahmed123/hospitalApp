@@ -17,6 +17,7 @@
     "react": "16.5.0",
     "react-native": "0.57.1",
     "react-native-gesture-handler": "^1.0.12",
+    "react-native-maps": "^0.23.0",
     "react-navigation": "^3.0.9",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BackHandler, PermissionsAndroid, View ,Text} from 'react-native';
+import { BackHandler, PermissionsAndroid, View , RefreshControl,Text} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from '../../actions';
 import { Container, Spinner, Content, Button} from 'native-base';
@@ -7,9 +7,24 @@ import AppHeader from "../AppHeader";
 import List from "./List";
 
 class Result extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          refreshing: false,
+        };
+        this._onRefresh = this._onRefresh.bind(this);
+    }    
     static navigationOptions = {
         header: null
     };
+    // Use When Refresh Data.
+    _onRefresh(){        
+        this.setState({refreshing: true});
+        this.props.NumberOpenedPage().then(() => {
+          this.setState({refreshing: false});
+          
+        });
+    }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         { this.props.NumberOpenedPage() }    
@@ -44,34 +59,30 @@ class Result extends Component {
         })
     }
     _requestLocationPermission(){            
-        try {
-            const granted = PermissionsAndroid.request(
-              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-              {
-                title: 'Cool Photo App ACCESS_FINE_LOCATION Permission',
-                message:
-                  'Cool Photo App needs access to your ACCESS_FINE_LOCATION ' +
-                  'so you can take awesome pictures.',
-                buttonNeutral: 'Ask Me Later',
-                buttonNegative: 'Cancel',
-                buttonPositive: 'OK',
-              },
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-              alert('You can use the ACCESS_FINE_LOCATION');
-
-            } else {
-                alert('ACCESS_FINE_LOCATION permission denied');
-            }
-          } catch (err) {
+        try{
+            
+            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);        
+        } catch (err) {
+            
             console.warn(err);
-          }                
+        }                        
     }
     render() {        
         return (
             <Container>
                 <AppHeader Navigation={this.props.navigation} />
-                <Content style={{ textAlign: 'right', direction: "rtl"}}>
+                <Content style={{ textAlign: 'right', direction: "rtl"}}
+                refreshControl={
+                        <RefreshControl 
+                            refreshing={this.state.refreshing} 
+                            onRefresh={this._onRefresh}
+                            title="Pull to refresh"
+                            tintColor="#9b59b6"
+                            titleColor="#34495e"
+                            colors={["#16a085", "#9b59b6",  "#34495e"]}
+                            />
+                    }
+                >
                     {this._ShowAllData()}
                     <Button style={{width: "100%"}} onPress={()=> this._requestLocationPermission()}>
                         <Text style={{color: "#fff"}}>Location</Text>
