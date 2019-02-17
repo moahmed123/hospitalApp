@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BackHandler, PermissionsAndroid, View , RefreshControl,Text} from 'react-native';
+import { BackHandler, PermissionsAndroid, Alert , RefreshControl,Text} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from '../../actions';
 import { Container, Spinner, Content, Button} from 'native-base';
@@ -59,13 +59,27 @@ class Result extends Component {
         })
     }
     _requestLocationPermission(){            
-        try{
-            
-            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);        
-        } catch (err) {
-            
-            console.warn(err);
-        }                        
+        // try{            
+        //     const permissions = PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+        //     if (permissions === PermissionsAndroid.RESULTS.GRANTED) resolve(true);
+        //     else reject(false);
+        //     // if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        //     //     console.log('You can use the Location');
+        //     // } else {
+        //     //     console.log('Location permission denied');
+        //     // }
+        // }catch(err) {            
+        //     console.warn(err);
+        // }                        
+        return new Promise(async() => {
+            const permissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+            if (permissions === PermissionsAndroid.RESULTS.GRANTED){
+                Alert.alert('access true');
+            }
+            else{
+                BackHandler.exitApp();
+            }
+        });
     }
     render() {        
         return (
