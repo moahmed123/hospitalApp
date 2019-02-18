@@ -74,7 +74,7 @@ class Result extends Component {
         return new Promise(async() => {
             const permissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
             if (permissions === PermissionsAndroid.RESULTS.GRANTED){
-                Alert.alert('access true');
+                // Alert.alert('access true');
             }
             else{
                 BackHandler.exitApp();
