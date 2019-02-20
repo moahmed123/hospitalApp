@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../../actions'
-import { Container, Content, Text, Icon } from 'native-base';
+import { Container, Content, Text, Icon, Spinner } from 'native-base';
 import {Dimensions, View} from 'react-native';
 import MapView from 'react-native-maps';
 import AppHeader from "./../AppHeader";
@@ -85,7 +85,8 @@ class Destination extends Component {
         }else{
             return (
                 <View style={{flex: 1,justifyContent: 'center', alignItem: 'center'}}>
-                    <Text> Loading Map ... </Text>
+                    <Spinner color="#16a085"/> 
+                    <Text style={{textAlign: 'center', fontSize:14, color:"#bdc3c7"}}> Loading Map ... </Text>
                 </View>
                 
             )

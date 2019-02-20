@@ -1,9 +1,22 @@
 import axios from 'axios';
 
-export function NumberOpenedPage(){
+export function GetHospitalData(name,city,cat,limit,minlimit,longitude,latitude,dis,active){
     return(dispatch) => {        
-        const urlAllData = "https://apihospital00.herokuapp.com/api/hotel?name=all&city=all&cat=all&admin=admin&limit=20&active=true";
-        return axios.get(urlAllData)
+        //http://localhost:3000/api/hotel?name=Test Hospitals&city=all&cat=1&limit=20&lng=29.957795&lat=31.22513&dis=622000&active=true
+        const urlAllData = "https://apihospital00.herokuapp.com/api/hotel";
+        return axios.get(urlAllData,{
+            params: {
+                name     : name,
+                city     : city,
+                cat      : cat,
+                limit    : limit,
+                minlimit : minlimit,
+                lng      : longitude,
+                lat      : latitude,
+                dis      : dis,
+                active   : active
+            }
+        })
         .then((response) => {                        
             dispatch(ActionDataFilter(response.data));
         })
