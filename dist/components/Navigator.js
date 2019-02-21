@@ -4,6 +4,7 @@ import SignUp from '../container/auth/SignUp';
 import TabNavigator from './TabNavigator';
 import Filter from './../container/Filter';
 import Splash from './../container/auth/Splash';
+import Search from './../container/AppBody/Search'
 
 const RootStack = createStackNavigator({
 
@@ -12,6 +13,8 @@ const RootStack = createStackNavigator({
    SignUp:{screen: SignUp},
 
    Filter:{screen: Filter},
+
+   Search:{screen: Search},
 
    Splash :{screen: Splash},
 

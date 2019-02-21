@@ -26,8 +26,7 @@ class Destination extends Component {
                 long: position.coords.longitude                
               });              
             },
-            (error) => {alert(error.message)},
-            //{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+            (error) => {alert(error.message)}
         ); 
     }
     componentWillUnmount() {

@@ -2,16 +2,27 @@ import React, { Component } from 'react';
 import { BackHandler, PermissionsAndroid, View, Dimensions , RefreshControl,Text} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from '../../actions';
-import { Container, Spinner, Content, Icon} from 'native-base';
+import { Container, Spinner, Content, Icon, Fab} from 'native-base';
 import AppHeader from "../AppHeader";
 import List from "./List";
+import Search from "./Search"
+
 const {height} = Dimensions.get('window');    
 
 class Result extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          refreshing: false,
+            refreshing: false,            
+            latitude  : "",
+            longitude : "",
+            limit     : "",
+            minlimit  : "",
+            dis       : "",
+            name      : "",
+            city      : "",
+            cat       : "", 
+            active    : 'true'            
         };
         this._onRefresh = this._onRefresh.bind(this);
     }    
@@ -21,7 +32,17 @@ class Result extends Component {
     // Use When Refresh Data.
     _onRefresh(){        
         this.setState({refreshing: true});
-        this.props.NumberOpenedPage().then(() => {
+        this.props.GetHospitalData(
+            this.state.name,
+            this.state.city,
+            this.state.cat,
+            this.state.limit,
+            this.state.minlimit,
+            this.state.longitude,
+            this.state.latitude,
+            this.state.dis,
+            true
+            ).then(() => {
           this.setState({refreshing: false});
           
         });
@@ -29,7 +50,7 @@ class Result extends Component {
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
         // { this.props.GetHospitalData(name,city,cat,limit,minlimit,lng,lat,dis,active) }    
-        {this._requestLocationPermission()}         
+        {this._requestLocationPermission()}              
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
@@ -77,6 +98,7 @@ class Result extends Component {
         }
         
     }
+    // Fun Access Location 
     _requestLocationPermission(){                                           
         return new Promise(async() => {
             const permissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
@@ -92,6 +114,16 @@ class Result extends Component {
                             name      = 'all',
                             city      = 'all',
                             cat       = 'all';
+                            this.setState({
+                                latitude  : latitude,
+                                longitude : longitude,
+                                limit     : limit,
+                                minlimit  : minlimit,
+                                dis       : dis,
+                                name      : name,
+                                city      : city,
+                                cat       : cat
+                            })
                       this.props.GetHospitalData(name,city,cat,limit,minlimit,longitude,latitude,dis,true);                      
                     },
                     (error) => {alert(error.message)}                    
@@ -118,8 +150,17 @@ class Result extends Component {
                             />
                     }
                 >
-                    {this._ShowAllData()}                    
-                </Content>                                
+                    {this._ShowAllData()}                     
+                </Content>      
+                    <Fab
+                        active={this.state.active}
+                        direction="up"
+                        containerStyle={{}}
+                        style={{ backgroundColor: 'rgba(22, 160, 133, 0.87)' }}
+                        position="bottomRight"
+                        onPress={() => this.props.navigation.navigate('Search')}>
+                        <Icon name="ios-search" type='Ionicons' style={{fontSize:25}}/>
+                    </Fab>                           
             </Container>
         );
     }
