@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {AsyncStorage} from 'react-native';
-import {Header, Button, Icon, Body, Title, Right } from 'native-base';
+import {Header, Button, Icon, Body, Title, Right, Text } from 'native-base';
 
 class AppHeader extends Component {
     constructor(props){
@@ -27,9 +27,11 @@ class AppHeader extends Component {
                 <Title style={{
                     backgroundColor: "#fff",
                     borderRadius: 60/2, width: 40, height: 40, 
-                    color: "#16a085", textAlign:"center", fontSize: 15, paddingTop: 9
+                     textAlign:"center", fontSize: 15, paddingTop: 9
                 }}>
-                    {this.state.emaillenght}
+                    <Text style={{textTransform: "uppercase", color: "#16a085"}}>
+                        {this.state.emaillenght}
+                    </Text>
                 </Title>
             </Body>
             <Right>

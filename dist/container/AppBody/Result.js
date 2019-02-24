@@ -134,6 +134,22 @@ class Result extends Component {
             }
         });
     }
+    // Function Show Seach Button 
+    ShowSearchButton(){
+        if(this.props.AllData){
+            return(
+                <Fab
+                    active={this.state.active}
+                    direction="up"
+                    containerStyle={{}}
+                    style={{ backgroundColor: 'rgba(22, 160, 133, 0.87)' }}
+                    position="bottomRight"
+                    onPress={() => this.props.navigation.navigate('Search')}>
+                        <Icon name="ios-search" type='Ionicons' style={{fontSize:25}}/>
+                </Fab>                           
+            )
+        }
+    }
     render() {            
         return (
             <Container>
@@ -151,16 +167,8 @@ class Result extends Component {
                     }
                 >
                     {this._ShowAllData()}                     
-                </Content>      
-                    <Fab
-                        active={this.state.active}
-                        direction="up"
-                        containerStyle={{}}
-                        style={{ backgroundColor: 'rgba(22, 160, 133, 0.87)' }}
-                        position="bottomRight"
-                        onPress={() => this.props.navigation.navigate('Search')}>
-                        <Icon name="ios-search" type='Ionicons' style={{fontSize:25}}/>
-                    </Fab>                           
+                </Content>                          
+                {this.ShowSearchButton()}
             </Container>
         );
     }

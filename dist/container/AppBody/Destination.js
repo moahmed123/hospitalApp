@@ -18,8 +18,7 @@ class Destination extends Component {
         };
     }
     componentDidMount() {
-        //this.watchId =  
-        navigator.geolocation.watchPosition(
+        this.watchId =  navigator.geolocation.watchPosition(
             (position) => {
               this.setState({
                 lat: position.coords.latitude,

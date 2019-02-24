@@ -14,11 +14,11 @@ class List extends Component {
                         }}>
                         {this.props.AllData['name']}
                     </Text>                    
-                    <View>                        
+                    <View style={{ display: 'flex' }}>
                         <Text style={{
                             width: null, lineHeight: 25, 
                             textAlign: 'right', direction: "rtl",
-                            marginBottom: 10, paddingTop: 10, color: '#34495e'
+                            marginBottom: 10, paddingTop: 10, color: '#34495e',
                         }}>
                             &nbsp;&nbsp;    {this.props.AllData['details']}
                         </Text>
