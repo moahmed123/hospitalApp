@@ -5,7 +5,6 @@ import * as actionCreatores from '../../actions';
 import { Container, Spinner, Content, Icon, Fab} from 'native-base';
 import AppHeader from "../AppHeader";
 import List from "./List";
-import Search from "./Search"
 
 const {height} = Dimensions.get('window');    
 
@@ -48,16 +47,16 @@ class Result extends Component {
         });
     }
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-        // { this.props.GetHospitalData(name,city,cat,limit,minlimit,lng,lat,dis,active) }    
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);          
         {this._requestLocationPermission()}              
     }
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-
     }
     handleBackPress = () => {
         //BackHandler.exitApp(); // To Exit App.         
+        
+        alert('backToLogo   => '+ this.props.navigation.state.routeName)
     }
     onClickFun() {
         this.props.navigation.navigate('filter');

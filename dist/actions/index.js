@@ -30,6 +30,28 @@ export function ActionDataFilter(result){
         dataType: result
     }
 }
-// export function TogglePopups(action){
-//     console.log(action);
-// }
+export function GeoLocation(categories, distance,limit,minlimit,name,city){
+    return(dispatch)=>{
+        navigator.geolocation.getCurrentPosition(
+            (position) => {                      
+              const latitude  = position.coords.latitude,
+                    longitude = position.coords.longitude;                    
+                // Function In Action Axios To Git Data Filter 
+                dispatch(
+                    GetHospitalData(
+                        name,
+                        city,
+                        categories,
+                        limit,
+                        minlimit,
+                        longitude,
+                        latitude,
+                        distance,
+                        true
+                    )
+                );
+            },
+            (error) => {alert(error.message)}                    
+        )
+    }   
+}

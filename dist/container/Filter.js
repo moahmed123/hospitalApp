@@ -31,37 +31,14 @@ class Filter extends Component {
         });
     }
     // Git Loation For User 
-    GitLocation(categories, distance){
-        navigator.geolocation.getCurrentPosition(
-            (position) => {                      
-              const latitude  = position.coords.latitude,
-                    longitude = position.coords.longitude,
-                    limit     = 20,
-                    minlimit  = 0,                    
-                    name      = 'all',
-                    city      = 'all';                    
-            // Function In Action Axios To Git Data Filter 
-            this.props.GetHospitalData(
-                  name,
-                  city,
-                  categories,
-                  limit,
-                  minlimit,
-                  longitude,
-                  latitude,
-                  distance,
-                  true);                      
-            },
-            (error) => {alert(error.message)}                    
-        ).then(()=>{
-            this.props.navigation.navigate('Home');
-        }); 
-
+    GitLocation(categories, distance){        
+        this.props.GeoLocation(categories, distance, 20, 0, "all", "all");
+        this.props.navigation.navigate('Home');        
     }
     // Submit Buttom 
     submitForm() {        
         const categories = this.state.categories,
-              distance   = this.state.distance;
+              distance   = this.state.distance;              
         // Run Function 
         this.GitLocation(categories, distance);                
     }    

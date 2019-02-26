@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Content, Icon, Form, Item, Input, Button, Text } from "native-base";
-import { View} from 'react-native';
+import * as actionCreatores from '../../actions';
+import { connect } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 
 class Search extends Component {
@@ -13,24 +14,44 @@ class Search extends Component {
         super(props);
         this.state = {
             search: "",
-            autoComplete: 'none'           
+            autoComplete: false           
         };
         this.submitForm = this.submitForm.bind(this);
         this.InputSearch = this.InputSearch.bind(this);
     }
     
+    // Fun AutoComplete: 
+    autoComplete(){
+        if (!this.props.AllData){
+            return null;
+        }        
+        return this.props.AllData['hospital'].map((data,i) => {
+            return(
+                <Button
+                    hasText transparent
+                    onPress={() => this.setState({autoComplete: false, search: data['name']})}
+                    style={{ marginTop: 5 }}
+               key={i} >
+                    <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
+                        {data['name']}
+                    </Text>
+                </Button>
+            )
+        })
+    }
     InputSearch(text) {
         if(text == ''){
-            this.setState({autoComplete: 'none'})    
+            this.setState({autoComplete: false})    
         }else{
-            this.setState({ autoComplete: 'flex' })
+            this.setState({ autoComplete: true })
         }
         
 
     }
-    submitForm() {
-        console.log(this.state.search);
-        this.props.navigation.navigate('Home');
+    // Function Submit For Search 
+    submitForm() {        
+        this.props.GeoLocation('all', '20000', 20, 0, this.state.search, "all");
+        this.props.navigation.navigate('Home');        
     }
     render() {
         return (
@@ -52,73 +73,15 @@ class Search extends Component {
                                 fontSize: 20, position: "absolute", right: 0, color: "#16a085"
                             }} />                            
                         </Item>
-                        <ScrollView style={{ 
-                            backgroundColor: '#ddd', display: this.state.autoComplete,
-                            width: '100%', height: 160}}>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none', search: 'Name Hospital'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>                         
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                            <Button
-                                hasText transparent
-                                onPress={() => this.setState({autoComplete: 'none'})}
-                                style={{ marginTop: 5 }}
-                            >
-                                <Text style={{ color: "#333", fontSize: 13, textAlign: 'center' }}>
-                                    Name Hospital                                                                         
-                                </Text>
-                            </Button>
-                        </ScrollView>                   
+                       {(this.state.autoComplete)?
+                            <ScrollView style={{
+                                backgroundColor: '#fafafa',width: '100%', 
+                                height: 160, borderWidth:1, 
+                                borderColor: "#ddd", borderStyle: 'solid'
+                            }}>
+                                {this.autoComplete()}
+                            </ScrollView>  
+                       : null}                                         
                         <Button rounded block
                             style={{ marginHorizontal: '35%', marginTop: 40 }}
                             onPress={this.submitForm}
@@ -131,4 +94,9 @@ class Search extends Component {
         );
     }
 }
-export default Search;
+function mapStateToProps(state){
+    return{
+        AllData: state.Result
+    }
+}
+export default connect(mapStateToProps, actionCreatores) (Search);
