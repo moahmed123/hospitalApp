@@ -33,24 +33,75 @@ class Destination extends Component {
     }
     // Marker Map To View All Hospital 
     _MarkerHospitalData(){
-        return this.props.result['hospital'].map((dataHospital,i) => {
-            return(
-                <MapView.Marker 
-                    key = {i}                        
-                    coordinate = {{
-                        latitude: dataHospital['loc']['coordinates'][1],
-                        longitude: dataHospital['loc']['coordinates'][0]
-                    }}
-                    title = {dataHospital['name']}
-                    description = {dataHospital['details']}                    
-                >          
-                    <Icon type="MaterialCommunityIcons" name="hospital-marker" style={{
-                        color:"#9b59b6",fontSize: 50
-                    }}/>
-                </MapView.Marker>
-               
-            )
-        });
+        // Check Page 
+        if (this.props.Page == 1){
+            // Page Google Hospital 
+            if(!this.props.googleHospital){
+                return null;
+            }else{                
+                return this.props.googleHospital['results'].map((dataHosMar, i) => {
+                    return (
+                        <MapView.Marker 
+                            key = {i}                        
+                            coordinate = {{
+                                latitude: dataHosMar['geometry']['location']['lat'],
+                                longitude: dataHosMar['geometry']['location']['lng']
+                            }}
+                            title = {dataHosMar['name']}
+                            description = {dataHosMar['vicinity']}                    
+                        >          
+                            <Icon type="MaterialCommunityIcons" name="hospital-marker" style={{
+                                color:"#9b59b6",fontSize: 50
+                            }}/>
+                        </MapView.Marker>
+                    );
+                });
+            }            
+        } else if(this.props.Page == 2){
+            // Page Google Restaurant 
+            if(!this.props.googleRestautant){
+                return null;
+            }else{
+                return this.props.googleRestautant['results'].map( (dataResMar, i)=>{
+                    return(
+                        <MapView.Marker 
+                            key = {i}                        
+                            coordinate = {{
+                                latitude: dataResMar['geometry']['location']['lat'],
+                                longitude: dataResMar['geometry']['location']['lng']
+                            }}
+                            title = {dataResMar['name']}
+                            description = {dataResMar['vicinity']}                    
+                        >          
+                            <Icon type="FontAwesome5" name="map-marker-alt" style={{
+                                color:"#9b59b6",fontSize: 30
+                            }}/>
+                        </MapView.Marker>
+                    )
+                })
+            }
+        }
+        else{
+            return this.props.result['hospital'].map((dataHospital,i) => {
+                return(
+                    <MapView.Marker 
+                        key = {i}                        
+                        coordinate = {{
+                            latitude: dataHospital['loc']['coordinates'][1],
+                            longitude: dataHospital['loc']['coordinates'][0]
+                        }}
+                        title = {dataHospital['name']}
+                        description = {dataHospital['details']}                    
+                    >          
+                        <Icon type="MaterialCommunityIcons" name="hospital-marker" style={{
+                            color:"#9b59b6",fontSize: 50
+                        }}/>
+                    </MapView.Marker>
+                   
+                )
+            });
+        }
+        
     }
 
     render() {
@@ -64,7 +115,7 @@ class Destination extends Component {
                             // showsPointsOfInterest                            
                             showsUserLocation                        
                             followsUserLocation
-                            // showsMyLocationButton                        
+                            // showsMyLocationButton                                                          
                             initialRegion={{
                                 latitude: this.state.lat,//37.78825,
                                 longitude: this.state.long,//-122.4324,
@@ -93,7 +144,10 @@ class Destination extends Component {
 }
 function mapStateToProps(state){
     return{
-        result: state.Result   
+        result           : state.Result, // Result Of Hospital APIS Custom 
+        Page             : state.PageName, // To Know Page 
+        googleRestautant : state.Restautant, // Data For Restautant
+        googleHospital   : state.Hospital // Data Hospital 
     }
 }
 export default connect (mapStateToProps, actionCreatores)(Destination);

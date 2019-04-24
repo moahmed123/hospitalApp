@@ -4,7 +4,9 @@ import SignUp from '../container/auth/SignUp';
 import TabNavigator from './TabNavigator';
 import Filter from './../container/Filter';
 import Splash from './../container/auth/Splash';
-import Search from './../container/AppBody/Search'
+import Search from './../container/AppBody/Search';
+import HomeBox from './../container/AppBody/HomeBox';
+import Resturants from './Resturants'
 
 const RootStack = createStackNavigator({
 
@@ -18,12 +20,26 @@ const RootStack = createStackNavigator({
 
    Splash :{screen: Splash},
 
+   HomeBox: {
+     screen : HomeBox,
+     navigationOptions: {
+        header: null
+     }
+   },
+
+   Resturants: {
+      screen: Resturants,
+      navigationOptions: {
+         header: null
+      }
+   },
+
    Home: {
       screen: TabNavigator,
       navigationOptions: {
          header: null
       }
-   }  
+   }
 },
 {
    initialRouteName: "Splash"

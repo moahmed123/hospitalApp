@@ -8,16 +8,16 @@ class Splash extends Component {
         this._delayLoading = this._delayLoading.bind(this);
     }
 	static navigationOptions = {
-	    header: null,   
-	};	
-	componentDidMount(){		
+	    header: null,
+	};
+	componentDidMount(){
 		AsyncStorage.multiGet(['app_Token']).then((data) => {
 			const Token = data[0][1];
 			console.log(Token);
-			if(Token){								
-				this._delayLoading('Home');				
-			}else{				
-				this._delayLoading('Login');				
+			if(Token){
+				this._delayLoading('HomeBox');
+			}else{
+				this._delayLoading('Login');
 			}
         });
 	}
@@ -25,10 +25,10 @@ class Splash extends Component {
 		setTimeout(() => {
 			this.props.navigation.navigate(screen);
 		}, 1000);
-	} 
+	}
   	render() {
     	return (
-	      <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', backgroundColor:"#fafafa"}}> 
+	      <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'center', backgroundColor:"#FFF"}}>
 		  	<StatusBar backgroundColor="#16a085" barStyle="light-content" />
 	            <View style={{ justifyContent: 'center', alignItems: 'center', paddingVertical: 20 }}>
 					<Thumbnail

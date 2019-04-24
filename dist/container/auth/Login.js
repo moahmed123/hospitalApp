@@ -24,34 +24,34 @@ class Login extends React.Component {
         this.Login = this.Login.bind(this);
         this.loadingButton = this.loadingButton.bind(this);
     }
-    componentDidMount(){        
-        AsyncStorage.multiGet(['email_user']).then((data) => {            
-            let email = data[0][1];  
+    componentDidMount(){
+        AsyncStorage.multiGet(['email_user']).then((data) => {
+            let email = data[0][1];
             console.log(email);
             if (email !== null){
                 this.setState({
                     user: email
                 });
-            }                
-        }); 
+            }
+        });
     }
     Login(email, pass) {
         try {
             firebase.auth()
                 .signInWithEmailAndPassword(email.trim(), pass)
                 .then((user) => {
-                    // Loading Button 
+                    // Loading Button
                     this.setState({
                         loading: true
-                    })    
-                    // Save Token && Email               
+                    })
+                    // Save Token && Email
                     const token = user['user']['refreshToken'];
                     const email = user['user']['email'];
                     AsyncStorage.multiSet([
                         ["app_Token", token],
                         ["email_user", email]
                     ]).then(() => {
-                        this.props.navigation.navigate('Home');
+                        this.props.navigation.navigate('HomeBox');
                     });
                 })
                 .catch((error) => { alert(error.toString()) });
@@ -59,14 +59,14 @@ class Login extends React.Component {
             console.log(error.toString())
         }
     }
-    // Function Loading When Login 
+    // Function Loading When Login
     loadingButton(){
-        if ( this.state.loading == false){            
-            return <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} />             
+        if ( this.state.loading == false){
+            return <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} />
         }else{
             return <Spinner color='#fafafa' style={{ fontSize: 25, opacity: .6 }}  />
         }
-                    
+
     }
     static navigationOptions = {
         header: null,
@@ -111,8 +111,8 @@ class Login extends React.Component {
                             >
                                {/* <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} /> */}
                                {this.loadingButton()}
-                            </Button>                           
-                        </Form>                                               
+                            </Button>
+                        </Form>
                         <View style={{marginHorizontal: '10%', marginTop: 15}}>
                             <Button
                                 hasText transparent
@@ -124,9 +124,9 @@ class Login extends React.Component {
                                         <Text style={{ color: "#16a085", fontSize: 13 }}> SINGUP </Text>
                                 </Text>
                             </Button>
-                        </View>     
-                    </Content>                                   
-                </Container>                
+                        </View>
+                    </Content>
+                </Container>
             </ImageBackground>
         );
     }

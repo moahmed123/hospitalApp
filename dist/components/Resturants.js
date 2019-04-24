@@ -1,26 +1,24 @@
-import React from 'react';
+import React from 'react'
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import {Icon} from 'native-base';
+import { Icon } from 'native-base';
 //Pages
-import Result from '../container/AppBody/Result';
+import Home from '../container/AppBody/PageResturants/List';
 import Destination from './../container/AppBody/Destination';
 import Profile from './../container/AppBody/Profile';
 
-const Tab = createBottomTabNavigator(
-    {
-        List: {screen : Result},
-
-        Destination : {screen: Destination},
-
-        Profile:{screen: Profile}
-    },
-    {
+const Resturants = createBottomTabNavigator(
+  {
+    Home: Home,
+    Destination: Destination,
+    Profile: Profile,
+  },
+  {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
         let iconType;
-        if (routeName === 'List') {
+        if (routeName === 'Home') {
             iconName = "list";
             iconType = "Entypo";
 
@@ -37,9 +35,9 @@ const Tab = createBottomTabNavigator(
       },
     }),
     tabBarOptions: {
-      activeTintColor: '#cc0000',
+      activeTintColor: 'tomato',
       inactiveTintColor: 'gray',
-    }
+    },
   }
 );
-export default createAppContainer(Tab);
+export default createAppContainer(Resturants)

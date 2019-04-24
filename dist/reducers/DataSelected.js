@@ -1,6 +1,6 @@
 const DataSelected = (state = null, action) => {
     switch(action.type){
-        case 'All_DATA_QURAN':
+        case 'All_DATA':
         return action.dataType;
         break;
     }

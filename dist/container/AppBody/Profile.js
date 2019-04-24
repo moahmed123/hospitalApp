@@ -53,12 +53,16 @@ class Profile extends Component {
         return (
             <Container>
                 <AppHeader Navigation={this.props.navigation} />
-                <Content style = {{flex:1, backgroundColor: '#eee'}}>                                   
+                <Content style = {{flex:1, backgroundColor: '#eee'}}>  
+                {
+                    (!this.state.name)? null:
                     <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5}}>
                         Your Name : { this.state.name }
                     </Text>
-                    <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5}}>
-                        Your Email : { this.state.emailUser }
+                }                    
+                    <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5, fontSize: 12}}>
+                        <Text style={{fontWeight: "bold", fontSize: 12}}> Your Email : </Text>
+                         { this.state.emailUser }
                     </Text> 
                     <Button 
                         success iconLeft rounded block 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {AsyncStorage} from 'react-native';
 import {Header, Button, Icon, Body, Title, Right, Text } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionCreatores from '../actions';
 
 class AppHeader extends Component {
     constructor(props){
@@ -34,13 +36,22 @@ class AppHeader extends Component {
                     </Text>
                 </Title>
             </Body>
-            <Right>
-                <Button transparent onPress={()=> this.props.Navigation.navigate('Filter')}>
-                  <Icon name="dots-three-vertical" type="Entypo" />
-                </Button>
-            </Right>
+            {
+                (this.props.PageNamber== 1 || this.props.PageNamber == 2) ? null:
+                <Right>
+                    <Button transparent onPress={()=> this.props.Navigation.navigate('Filter')}>
+                    <Icon name="dots-three-vertical" type="Entypo" />
+                    </Button>
+                </Right>
+            }
+            
         </Header>
     );
   }
 }
-export default AppHeader;        
+function mapStateToProps(state){
+    return{
+        PageNamber: state.PageName
+    }
+}
+export default connect(mapStateToProps, actionCreatores)(AppHeader);
