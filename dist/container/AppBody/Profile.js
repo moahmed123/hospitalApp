@@ -4,6 +4,7 @@ import {AsyncStorage, View} from 'react-native';
 import AppHeader from "../AppHeader";
 import * as firebase from "firebase";
 import './../auth/ConnectFirebase';
+import {AdMobRewarded, AdMobBanner} from 'react-native-admob-dfp';
 // symbol polyfills
 global.Symbol = require('core-js/es6/symbol');
 require('core-js/fn/symbol/iterator');
@@ -35,7 +36,9 @@ class Profile extends Component {
                     name: userName
                 });
             }                
-        });                                
+        });                        
+        AdMobRewarded.setAdUnitID('ca-app-pub-7316325922246137/8685204184');
+        AdMobRewarded.requestAd().then(() => AdMobRewarded.showAd());
     }
     // Logout Function And Remove AsyncStorage
     _logOutUser() {        
@@ -54,25 +57,37 @@ class Profile extends Component {
             <Container>
                 <AppHeader Navigation={this.props.navigation} />
                 <Content style = {{flex:1, backgroundColor: '#eee'}}>  
-                {
-                    (!this.state.name)? null:
-                    <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5}}>
-                        Your Name : { this.state.name }
-                    </Text>
-                }                    
-                    <Text style={{paddingVertical: 20, textAlign: 'center', marginTop:5, fontSize: 12}}>
-                        <Text style={{fontWeight: "bold", fontSize: 12}}> Your Email : </Text>
-                         { this.state.emailUser }
-                    </Text> 
-                    <Button 
-                        success iconLeft rounded block 
-                        style={{marginHorizontal: '25%', marginTop:15}}
-                        onPress={this._logOutUser}
-                        >
-                        <Icon name='logout' type='AntDesign' />
-                        <Text>Logout</Text> 
-                    </Button>                    
-                </Content>
+                    <View style={{}}>
+                        {
+                        (!this.state.name)? null:
+                        <Text style={{paddingVertical: 10, textAlign: 'center', marginTop:20, fontSize: 15}}>
+                            <Text style={{fontWeight: "bold", fontSize: 15}}> Your Name : </Text>
+                            { this.state.name }
+                        </Text>
+                        }                    
+                        <Text style={{paddingVertical: 10, textAlign: 'center', marginTop:5, fontSize: 15}}>
+                            <Text style={{fontWeight: "bold", fontSize: 15}}> Your Email : </Text>
+                            { this.state.emailUser }
+                        </Text> 
+                        <Button 
+                            success iconLeft rounded block 
+                            style={{marginHorizontal: '25%', marginTop:15}}
+                            onPress={this._logOutUser}
+                            >
+                            <Icon name='logout' type='AntDesign' />
+                            <Text>Logout</Text> 
+                        </Button>                                            
+                    </View>                                        
+                </Content>                
+                <View style={{
+                    alignItems: 'center',  flex: 1, paddingBottom: 10,
+                    justifyContent: 'flex-end', backgroundColor: '#eee'}}>
+                    <AdMobBanner
+                        adSize="banner"
+                        adUnitID="ca-app-pub-7316325922246137/2971322393"
+                        testDevices={[AdMobBanner.simulatorId]}
+                    />
+                </View>
             </Container>
         );
     }

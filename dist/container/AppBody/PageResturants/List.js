@@ -79,7 +79,7 @@ class List extends Component {
                         <View style={{justifyContent: 'flex-end', flex:1 }}>
                             <AdMobBanner
                                 adSize="fullBanner"
-                                adUnitID="ca-app-pub-7316325922246137/9456673457"
+                                adUnitID="ca-app-pub-7316325922246137/5285784106"
                                 testDevices={[AdMobBanner.simulatorId]}
                             />
                         </View>
@@ -100,6 +100,7 @@ class List extends Component {
                 );
                 
             } else if (this.props.googleRestautant && this.props.googleRestautant['status'] == 'ZERO_RESULTS' ){
+                // Not Found Page About Restaurants
                 return (
                     <View style = {{flex: 1,height: height-133}}>
                         <Icon type='MaterialCommunityIcons' name='food' style={{
@@ -114,7 +115,7 @@ class List extends Component {
                         <View style={{justifyContent: 'flex-end', flex:1 }}>
                             <AdMobBanner
                                 adSize="fullBanner"
-                                adUnitID="ca-app-pub-7316325922246137/9456673457"
+                                adUnitID="ca-app-pub-7316325922246137/5285784106"
                                 testDevices={[AdMobBanner.simulatorId]}
                             />
                         </View>
@@ -186,7 +187,7 @@ class List extends Component {
                         <View style={{paddingTop: 10, alignItems: "center"}}>                            
                             <AdMobBanner
                                 adSize="banner"
-                                adUnitID="ca-app-pub-7316325922246137/9456673457"
+                                adUnitID="ca-app-pub-7316325922246137/4023715469"
                                 testDevices={[AdMobBanner.simulatorId]}
                             />
                         </View>

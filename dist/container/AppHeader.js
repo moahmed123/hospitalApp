@@ -17,7 +17,7 @@ class AppHeader extends Component {
             let email = data[0][1];            
             if (email !== null){
                 this.setState({
-                    emaillenght: email.slice(0,2)
+                    emaillenght: email.slice(0,2).toUpperCase()
                 });
             }                
         });                                
@@ -31,7 +31,7 @@ class AppHeader extends Component {
                     borderRadius: 60/2, width: 40, height: 40, 
                      textAlign:"center", fontSize: 15, paddingTop: 9
                 }}>
-                    <Text style={{textTransform: "uppercase", color: "#16a085"}}>
+                    <Text style={{color: "#16a085"}}>
                         {this.state.emaillenght}
                     </Text>
                 </Title>

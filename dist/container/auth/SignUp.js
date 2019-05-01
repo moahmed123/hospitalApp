@@ -75,24 +75,47 @@ class SignUp extends React.Component {
                                 />
                             </View>
                             <Form style={{ width: '100%', color: "#333" }}>
-                                <Item floatingLabel>
-                                    <Label>userName</Label>
-                                    <Input onChangeText={(user) => {
-                                        this.setState({ username: user });
-                                    }} />
-                                </Item>
-                                <Item floatingLabel>
-                                    <Label>Email</Label>
+                                                                
+                                    <Input onChangeText={(user) => this.setState({ username: user })} 
+                                        onSubmitEditing={() => {this.EmailInputRef._root.focus()}} 
+                                        placeholder = 'Name'
+                                        placeholderTextColor='#999'
+                                        style={{
+                                            borderColor: 'transparent',
+                                            borderBottomColor:"#ddd", 
+                                            marginBottom: 20,
+                                            borderStyle: 'solid',
+                                            borderWidth: 1                                
+                                        }}
+                                    />                                                                
                                     <Input onChangeText={(email) => {
                                         this.setState({ email: email });
-                                    }} />
-                                </Item>
-                                <Item floatingLabel>
-                                    <Label>Password</Label>
+                                    }} 
+                                    ref = {input => {this.EmailInputRef = input}}
+                                    onSubmitEditing = {()=>{this.PasswordInputRef._root.focus()}}
+                                    placeholder = 'Email'
+                                    placeholderTextColor='#999'
+                                    style = {{
+                                        borderColor: 'transparent',
+                                        borderBottomColor:"#ddd", 
+                                        marginBottom: 20,
+                                        borderStyle: 'solid',
+                                        borderWidth: 1                                
+                                    }}/>                                                                
                                     <Input onChangeText={(Password) => {
                                         this.setState({ pass: Password });
-                                    }} />
-                                </Item>
+                                    }} 
+                                    secureTextEntry
+                                    ref = {input => {this.PasswordInputRef = input}}
+                                    onSubmitEditing = {() => this.SignUp(this.state.email, this.state.pass)}
+                                    placeholder = 'Password'
+                                    placeholderTextColor='#999'
+                                    style={{
+                                        borderColor: 'transparent',
+                                        borderBottomColor:"#ddd",                                         
+                                        borderStyle: 'solid',
+                                        borderWidth: 1                                
+                                    }}/>                                
                                 <Button
                                     light full rounded
                                     onPress={() => this.SignUp(this.state.email, this.state.pass)}

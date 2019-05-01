@@ -5,6 +5,7 @@ import { Container, Content, Text, Icon, Spinner } from 'native-base';
 import {Dimensions, View} from 'react-native';
 import MapView from 'react-native-maps';
 import AppHeader from "./../AppHeader";
+import {AdMobInterstitial} from 'react-native-admob-dfp';
 
 class Destination extends Component {
     static navigationOptions = {
@@ -27,6 +28,10 @@ class Destination extends Component {
             },
             (error) => {alert(error.message)}
         ); 
+          // Ads For Cover Page 
+        AdMobInterstitial.setAdUnitID('ca-app-pub-7316325922246137/8941958083');
+        AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+        AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
     }
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchId);

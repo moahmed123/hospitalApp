@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Form, View, Item, Label, Input, Button, Text, Icon, Thumbnail, Content, Spinner } from 'native-base';
+import { Container, Form, View, Item, Input, Button, Text, Icon, Thumbnail, Content, Spinner } from 'native-base';
 import { AsyncStorage, ImageBackground, StatusBar } from 'react-native';
 import * as firebase from "firebase";
+import {AdMobBanner} from 'react-native-admob-dfp'
 import './ConnectFirebase';
 // symbol polyfills
 global.Symbol = require('core-js/es6/symbol');
@@ -88,28 +89,41 @@ class Login extends React.Component {
                                 source={require('./../../src/hospital-icon.png')}
                             />
                         </View>
-                        <Form style={{ width: '100%', color: "#333" }}>
-                            <Item floatingLabel>
-                                <Label>Username</Label>
+                        <Form style={{ width: '100%', color: "#333" }}>                            
                                 <Input onChangeText={(user) => {
                                     this.setState({ user: user });
                                 }}
-                                value={this.state.user} />
-                            </Item>
-                            <Item floatingLabel>
-                                <Label>Password</Label>
+                                onSubmitEditing = {()=>{this.PasswordInputRef._root.focus()}}
+                                value={this.state.user} 
+                                placeholder = 'Email'
+                                placeholderTextColor='#999'
+                                style={{
+                                    borderColor: 'transparent',
+                                    borderBottomColor:"#ddd", 
+                                    marginBottom: 20,
+                                    borderStyle: 'solid',
+                                    borderWidth: 1                                
+                                }}/>
                                 <Input
+                                    ref = {input => {this.PasswordInputRef = input}}                                    
                                     secureTextEntry
                                     onChangeText={(Password) => {
                                         this.setState({ pass: Password });
-                                    }} />
-                            </Item>
+                                    }} 
+                                    placeholder='Password'
+                                    placeholderTextColor='#999'
+                                    onSubmitEditing = {() => this.Login(this.state.user, this.state.pass)}
+                                    style={{
+                                        borderColor: 'transparent',
+                                        borderBottomColor:"#ddd",                                         
+                                        borderStyle: 'solid',
+                                        borderWidth: 1                                
+                                    }}/>                          
                             <Button
                                 light info full rounded
                                 onPress={() => this.Login(this.state.user, this.state.pass)}
                                 style={{ marginTop: 45, backgroundColor: '#16a085', marginHorizontal: "15%" }}
-                            >
-                               {/* <Icon name='login' type='MaterialCommunityIcons' style={{ color: "#fff", fontSize: 25 }} /> */}
+                            >                               
                                {this.loadingButton()}
                             </Button>
                         </Form>
@@ -121,10 +135,17 @@ class Login extends React.Component {
                             >
                                 <Text style={{ color: "#aaa", fontSize: 13, textAlign: 'center' }}>
                                     Don't have an account?
-                                        <Text style={{ color: "#16a085", fontSize: 13 }}> SINGUP </Text>
+                                    <Text style={{ color: "#16a085", fontSize: 13 }}> SIGNUP </Text>
                                 </Text>
                             </Button>
-                        </View>
+                            <View style={{alignItems: 'center',  flex: 1}}>
+                                <AdMobBanner
+                                    adSize="banner"
+                                    adUnitID="ca-app-pub-7316325922246137/7295911915"
+                                    testDevices={[AdMobBanner.simulatorId]}
+                                />
+                            </View>
+                        </View>                        
                     </Content>
                 </Container>
             </ImageBackground>
