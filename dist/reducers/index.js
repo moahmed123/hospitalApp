@@ -5,12 +5,15 @@ import NameOfPage from './NameOfPage'
 import GoogleHospital from './GoogleHospital';
 // GoogleRestautant
 import GoogleRestautant from './GoogleRestautant';
+// Hospital Data Result ById 
+import DetailsDataHospital from './DetailsDataHospital'
 
 const allReducers = combineReducers({
-    Result     : DataSelected,
-    PageName   : NameOfPage,
-    Restautant : GoogleRestautant,
-    Hospital   : GoogleHospital
+    Result          : DataSelected,
+    PageName        : NameOfPage,
+    Restautant      : GoogleRestautant,
+    Hospital        : GoogleHospital,
+    DetailsHospital : DetailsDataHospital
 });
 
 export default allReducers ;

@@ -6,7 +6,8 @@ import Filter from './../container/Filter';
 import Splash from './../container/auth/Splash';
 import Search from './../container/AppBody/Search';
 import HomeBox from './../container/AppBody/HomeBox';
-import Resturants from './Resturants'
+import Resturants from './Resturants';
+import ViewDistance from './../container/AppBody/ViewDistance';
 
 const RootStack = createStackNavigator({
 
@@ -19,6 +20,13 @@ const RootStack = createStackNavigator({
    Search:{screen: Search},
 
    Splash :{screen: Splash},
+
+   MapDistance :{
+      screen: ViewDistance,
+      navigationOptions:{
+         header: null
+      }
+   },
 
    HomeBox: {
      screen : HomeBox,

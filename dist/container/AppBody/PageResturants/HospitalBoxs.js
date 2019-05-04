@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardItem, Body, Text, Icon, View } from 'native-base';
+import { Card, CardItem, Button, Body, Text, Icon, View } from 'native-base';
+import { connect } from 'react-redux';
+import * as actionCreatores from './../../../actions';
 
 class HospitalBoxs extends Component {
     _RatingFun() {
@@ -60,7 +62,7 @@ class HospitalBoxs extends Component {
                             </Text>
                         }
                         
-                        <View style={{ textAlign: 'right', direction: "rtl", width: "100%", flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                             {
                                 (!this.props.DataHospital['types'][0]) ? null :
                                     <Text style={{
@@ -117,10 +119,40 @@ class HospitalBoxs extends Component {
 
 
                         </View>
-                    </Body>
+                        <Button style={{ 
+                            marginTop: 15, width: '100%', backgroundColor: "#fafafa",
+                            borderRadius: 4
+                        }} full light
+                        onPress={
+                            () => {
+                                this.props.Navigation.navigate('MapDistance');
+                                const DataForHospital = [{
+                                    name   : this.props.DataHospital['name'],
+                                    address: this.props.DataHospital['vicinity'],
+                                    review : this.props.DataHospital['user_ratings_total'],
+                                    rating : this.props.DataHospital['rating'],
+                                    longitude   : this.props.DataHospital['geometry']['location']['lng'],
+                                    latitude    : this.props.DataHospital['geometry']['location']['lat'],
+                                }]        
+                                this.props.DataHospitalAction(DataForHospital);  
+                                console.log(DataForHospital);                             
+                            }
+                        }> 
+                            <Text style={{
+                                textAlign: 'center', width: '100%', color: "#3498db", fontSize: 13
+                            }}>
+                                View Map distance
+                            </Text>
+                        </Button>
+                    </Body>                    
                 </CardItem>
             </Card>
         );
     }
 }
-export default HospitalBoxs;
+function mapStateToProps(state){
+    return{
+        DetailsDataHospital: state.DetailsHospital
+    }
+}
+export default connect(mapStateToProps, actionCreatores)(HospitalBoxs);

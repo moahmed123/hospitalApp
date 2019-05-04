@@ -110,7 +110,7 @@ class Destination extends Component {
     }
 
     render() {
-        const {height} = Dimensions.get('window');
+        const {height} = Dimensions.get('window');        
         if(this.state.lat != '' && this.state.long != ''){
             return (
                 <Container>
@@ -126,8 +126,8 @@ class Destination extends Component {
                                 longitude: this.state.long,//-122.4324,
                                 // latitudeDelta: 0.005,
                                 // longitudeDelta: 0.005
-                                latitudeDelta: 0.0922,
-                                longitudeDelta: 0.0421,                            
+                                latitudeDelta: 0.0122,
+                                longitudeDelta: 0.0121,                            
                             }}
                             style={{ width: "100%", height:height - 125}}
                         >

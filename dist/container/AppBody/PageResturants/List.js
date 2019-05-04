@@ -87,7 +87,7 @@ class List extends Component {
                 );
             }else {
                 return this.props.googleHospital['results'].map( (data, i) => {
-                    return <HospitalBoxs key = {i} DataHospital = {data}/> 
+                    return <HospitalBoxs key = {i} DataHospital = {data} Navigation = {this.props.navigation}/> 
                 });               
             }
          
@@ -125,7 +125,7 @@ class List extends Component {
             } else {
                 //RestaurantBoxs
                 return this.props.googleRestautant['results'].map( (data, i) => {
-                    return <RestaurantBoxs key = {i} DataRestautant = {data}/> 
+                    return <RestaurantBoxs key = {i} DataRestautant = {data} Navigation = {this.props.navigation}/> 
                 });                               
             }
         }        

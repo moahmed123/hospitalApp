@@ -19,6 +19,7 @@
     "react-native-admob-dfp": "^2.0.0-beta.3.9",
     "react-native-gesture-handler": "^1.0.12",
     "react-native-maps": "^0.23.0",
+    "react-native-maps-directions": "^1.6.0",
     "react-navigation": "^3.0.9",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",

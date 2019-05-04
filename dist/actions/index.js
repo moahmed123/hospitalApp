@@ -120,3 +120,16 @@ export function NameOfPage(PageName){
         name: PageName
     }
 }
+// Hospital Details such as By Id , 
+export function DataHospitalAction(dataForHospital){
+    return (dispatch) => {
+          dispatch(ShowDataHospital(dataForHospital));
+    }
+  }
+  export function ShowDataHospital(ResultHospitalData){
+      return{
+          type: 'SHOW_DATA_HOSPITAL',
+          HospitalData: ResultHospitalData
+      }
+  }
+  
