@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Card, CardItem, Button, Body, Text, Icon, View } from 'native-base';
+import { Card, CardItem, Button, Body, Text, Icon, View, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import * as actionCreatores from './../../../actions';
 
 class HospitalBoxs extends Component {
+    constructor(props) {
+        super(props);      
+        this.state = {
+         distanceLoading: false         
+        };
+    }
     _RatingFun() {
         let rating = [],
             ratingRes = Math.round(this.props.DataHospital['rating']);
@@ -125,7 +131,8 @@ class HospitalBoxs extends Component {
                         }} full light
                         onPress={
                             () => {
-                                this.props.Navigation.navigate('MapDistance');
+                                this.setState({distanceLoading: true});
+                                // this.props.Navigation.navigate('MapDistance');
                                 const DataForHospital = [{
                                     name   : this.props.DataHospital['name'],
                                     address: this.props.DataHospital['vicinity'],
@@ -133,16 +140,22 @@ class HospitalBoxs extends Component {
                                     rating : this.props.DataHospital['rating'],
                                     longitude   : this.props.DataHospital['geometry']['location']['lng'],
                                     latitude    : this.props.DataHospital['geometry']['location']['lat'],
-                                }]        
-                                this.props.DataHospitalAction(DataForHospital);  
-                                console.log(DataForHospital);                             
+                                }]                                        
+                                this.props.DataHospitalAction(DataForHospital);                                                            
+                                setTimeout(()=>{
+                                    this.setState({distanceLoading: false});
+                                    this.props.Navigation.navigate('MapDistance');
+                                },2000)
                             }
                         }> 
                             <Text style={{
                                 textAlign: 'center', width: '100%', color: "#3498db", fontSize: 13
-                            }}>
-                                View Map distance
-                            </Text>
+                            }}>                            
+                                View Distance (Map)                                                             
+                            </Text>                            
+                            {(this.state.distanceLoading == false)? null : 
+                                <Spinner color="#3498db" size= {20} style={{right: 20, position: 'absolute'}}/> 
+                            }
                         </Button>
                     </Body>                    
                 </CardItem>

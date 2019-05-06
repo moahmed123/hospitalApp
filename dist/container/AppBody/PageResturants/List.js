@@ -7,6 +7,7 @@ import { Container, Spinner, Content, Icon, Fab} from 'native-base';
 import AppHeader from "../../AppHeader";
 import HospitalBoxs from './HospitalBoxs';
 import RestaurantBoxs from './RestaurantBoxs';
+import AtmBoxs from './AtmBoxs';
 import {AdMobBanner} from 'react-native-admob-dfp'
 
 const {height} = Dimensions.get('window');
@@ -89,8 +90,7 @@ class List extends Component {
                 return this.props.googleHospital['results'].map( (data, i) => {
                     return <HospitalBoxs key = {i} DataHospital = {data} Navigation = {this.props.navigation}/> 
                 });               
-            }
-         
+            }       
         }else if (this.props.Page == 2) {   // Page Restautant Google 
             if (!this.props.googleRestautant) {
                 return (
@@ -128,7 +128,40 @@ class List extends Component {
                     return <RestaurantBoxs key = {i} DataRestautant = {data} Navigation = {this.props.navigation}/> 
                 });                               
             }
-        }        
+        }else if(this.props.Page == 3) {   // Page ATM Google
+            if(!this.props.googleAtm){
+                <View>
+                    {this._loadingComp()}
+                </View>
+            }else if (this.props.googleAtm && this.props.googleAtm['status'] == 'ZERO_RESULTS'){ 
+                 // Not Found Page About Restaurants
+                 return (
+                    <View style = {{flex: 1,height: height-133}}>
+                        <Icon type='MaterialCommunityIcons' name='food' style={{
+                            paddingTop: (height-200)/2, textAlign: "center",
+                            fontSize: 45, color: '#16a085'
+                        }}/>
+                        <Text style = {{textAlign: "center", color: '#2c3e50', fontSize: 16, paddingTop:15}}>
+                            No
+                            <Text style={{fontWeight: '600', color:'#16a085', fontSize: 18}} > ATM </Text>
+                            Found In This Area
+                        </Text>
+                        <View style={{justifyContent: 'flex-end', flex:1 }}>
+                            <AdMobBanner
+                                adSize="fullBanner"
+                                adUnitID="ca-app-pub-7316325922246137/5285784106"
+                                testDevices={[AdMobBanner.simulatorId]}
+                            />
+                        </View>
+                    </View>
+                );
+            }else{
+                //RestaurantBoxs
+                return this.props.googleAtm['results'].map( (data, i) => {
+                    return <AtmBoxs key = {i} DataAtm = {data} Navigation = {this.props.navigation}/> 
+                });                               
+            }
+        } 
     }
      // Use When Refresh Data.
      _onRefresh(){
@@ -145,6 +178,15 @@ class List extends Component {
             // Page restaurant
             const radius = 5000,
             type   = "restaurant",
+            key    = "AIzaSyA1_LlH4b_MSwz_vYyVm4Sxf2fAgRO8U-U";
+
+            this.props.GetResturantsGoogle(this.state.location, radius, type, key).then(() => {
+                this.setState({refreshing: false});      
+            });
+        }else if(this.props.Page == 3){            
+            // Page ATM
+            const radius = 5000,
+            type   = "atm",
             key    = "AIzaSyA1_LlH4b_MSwz_vYyVm4Sxf2fAgRO8U-U";
 
             this.props.GetResturantsGoogle(this.state.location, radius, type, key).then(() => {
@@ -170,7 +212,7 @@ class List extends Component {
                     }
                 >
                     {
-                        (!this.props.googleHospital && !this.props.googleRestautant )? null :
+                        (!this.props.googleHospital && !this.props.googleRestautant && !this.props.googleAtm )? null :
                         <View style={{paddingTop: 3, alignItems: "center"}}>                            
                             <AdMobBanner
                                 adSize="banner"
@@ -183,7 +225,7 @@ class List extends Component {
                         {this._ShowDataForGoogle()}
                     </View>
                     {
-                        (!this.props.googleHospital && !this.props.googleRestautant )? null :
+                        (!this.props.googleHospital && !this.props.googleRestautant && !this.props.googleAtm )? null :
                         <View style={{paddingTop: 10, alignItems: "center"}}>                            
                             <AdMobBanner
                                 adSize="banner"
@@ -201,7 +243,8 @@ function mapStateToProps(state) {
     return {
        Page             : state.PageName, // To Know Page 
        googleRestautant : state.Restautant, // Data For Restautant
-       googleHospital   : state.Hospital // Data Hospital 
+       googleHospital   : state.Hospital, // Data Hospital 
+       googleAtm        : state.Atm // Data Hospital 
     }
 }
 export default connect(mapStateToProps, actionCreatores)(List);

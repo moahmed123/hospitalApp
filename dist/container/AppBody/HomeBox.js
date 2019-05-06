@@ -22,7 +22,7 @@ class HomeBox extends Component {
         return new Promise(async() => {
             const permissions = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
             if (permissions === PermissionsAndroid.RESULTS.GRANTED){
-                
+                // getCurrentPosition
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
                         const location = position.coords.latitude + "," + position.coords.longitude;                        
@@ -30,7 +30,12 @@ class HomeBox extends Component {
                                 location: location,                                                        
                             });                      
                     },
-                    (error) => {alert(error.message)}
+                    (error) => {alert(error.message)},
+                    {
+                        enableHighAccuracy: false,
+                        timeout: 20000,
+                        maximumAge: 3600000 
+                    }                    
                 );
             }
             else{
@@ -64,7 +69,7 @@ class HomeBox extends Component {
                                     <Text> Hospital </Text>
                                 </TouchableHighlight>
                             </View>
-                            <View style={{ height: 150, flex: 2, marginTop: 5, borderRadius: 5, marginHorizontal:10}}>
+                            <View style={{ height: 150, flex: 1, marginTop: 5, borderRadius: 5, marginHorizontal:10, marginRight: 5}}>                            
                                 <ImageBackground
                                     source={require('./../../src/boxHospital.png')}
                                     style={{ resizeMode: 'cover', flex: 1 }}
@@ -78,7 +83,7 @@ class HomeBox extends Component {
                                         this.props.GetResturantsGoogle(this.state.location, radius, type, key);
                                     }}
                                         style={{ backgroundColor: "rgba(0, 0, 0, 0.28)",
-                                        justifyContent: 'center', alignItems: 'center', flex: 1 }}>                                        
+                                        justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                                         <Text style={{ color: '#FFF', fontWeight: 'bold',fontSize: 25 }}>
                                              <Text style={{ color: '#2ecc71', fontWeight: 'bold',fontSize: 25 }}>
                                                 Hos
@@ -89,7 +94,34 @@ class HomeBox extends Component {
                                 </ImageBackground>
                                 
                             </View>
+                            {/* View ATM Bank Statment */}
+                            <View style={{ height: 150,flex: 1,marginTop: 5, borderRadius: 5, marginHorizontal:5, marginLeft:0, marginRight:10}}>
+                                <ImageBackground
+                                    source={require('./../../src/ATM.jpg')}
+                                    style={{ resizeMode: 'cover', flex: 1 }}
+                                >
+                                    <TouchableHighlight onPress={() => {
+                                        this.props.navigation.navigate('Resturants')
+                                        this.props.CheckPage(3);// Page For ATM Google (3)
+                                        const radius = 5000,
+                                        type   = "atm",
+                                        key    = "AIzaSyA1_LlH4b_MSwz_vYyVm4Sxf2fAgRO8U-U";                                  
+                                        this.props.GetResturantsGoogle(this.state.location, radius, type, key);                                                                                
+                                    }}
+                                    style={{ backgroundColor: "rgba(0, 0, 0, 0.28)",
+                                    justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                                        <Text style={{ color: '#FFF', fontWeight: 'bold',fontSize: 25 }}>
+                                            A
+                                            <Text style={{ color: 'rgb(92, 173, 255)', fontWeight: 'bold',fontSize: 25 }}>
+                                            T
+                                            </Text>
+                                            M
+                                        </Text>
+                                    </TouchableHighlight>
+                                </ImageBackground>
+                            </View>
                         </View>
+                        {/* View Restaurant */}
                         <View style={{ height: 150, borderRadius: 5,marginHorizontal:10, marginTop:5}}>
                             <ImageBackground
                                 source={require('./../../src/boxRestuarant.png')}

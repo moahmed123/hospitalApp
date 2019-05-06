@@ -28,7 +28,7 @@ class ViewDistance extends Component {
             (error) => { alert(error.message) }
         );
         // Ads For Cover Page 
-        AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/8691691433');
+        AdMobInterstitial.setAdUnitID('ca-app-pub-7316325922246137/3351601937');
         AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
         AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
     }
@@ -144,7 +144,7 @@ class ViewDistance extends Component {
                         justifyContent: 'flex-end', backgroundColor: '#fff'}}>
                         <AdMobBanner
                             adSize="banner"
-                            adUnitID="ca-app-pub-3940256099942544/6300978111"
+                            adUnitID="ca-app-pub-7316325922246137/7852161715"
                             testDevices={[AdMobBanner.simulatorId]}
                         />
                     </View>            

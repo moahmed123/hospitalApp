@@ -78,8 +78,10 @@ export function GetResturantsGoogle( location, radius, type, key){
                 dispatch(ActionGoogleHospital(response.data));
             }else if (type == 'restaurant'){
                 // Send Fun Restautrant Data 
-                dispatch(ActionGoogleRestautant(response.data));
-                console.log(response.data)
+                dispatch(ActionGoogleRestautant(response.data));                
+            }else if(type == 'atm'){
+                // Send Fun Atm Data 
+                dispatch(ActionGoogleAtm(response.data))
             }
             
         })
@@ -106,6 +108,12 @@ export function ActionGoogleRestautant(Restaurant){
     return{
         type: 'Google _Restaurant',
         restaurantData: Restaurant
+    }
+}
+export function ActionGoogleAtm(AtmResult){
+    return{
+        type: 'Google_ATM',
+        ATMData: AtmResult
     }
 }
 // check Page To Use To Change Result For Hospital Google Or Resturants Google

@@ -85,6 +85,29 @@ class Destination extends Component {
                     )
                 })
             }
+        } else if(this.props.Page == 3){
+            // Page Google Restaurant 
+            if(!this.props.googleAtm){
+                return null;
+            }else{
+                return this.props.googleAtm['results'].map( (dataResMar, i)=>{
+                    return(
+                        <MapView.Marker 
+                            key = {i}                        
+                            coordinate = {{
+                                latitude: dataResMar['geometry']['location']['lat'],
+                                longitude: dataResMar['geometry']['location']['lng']
+                            }}
+                            title = {dataResMar['name']}
+                            description = {dataResMar['vicinity']}                    
+                        >          
+                            <Icon type="FontAwesome5" name="map-marker-alt" style={{
+                                color:"#9b59b6",fontSize: 30
+                            }}/>
+                        </MapView.Marker>
+                    )
+                })
+            }
         }
         else{
             return this.props.result['hospital'].map((dataHospital,i) => {
@@ -152,7 +175,8 @@ function mapStateToProps(state){
         result           : state.Result, // Result Of Hospital APIS Custom 
         Page             : state.PageName, // To Know Page 
         googleRestautant : state.Restautant, // Data For Restautant
-        googleHospital   : state.Hospital // Data Hospital 
+        googleHospital   : state.Hospital, // Data Hospital 
+        googleAtm        : state.Atm // Data ATM
     }
 }
 export default connect (mapStateToProps, actionCreatores)(Destination);

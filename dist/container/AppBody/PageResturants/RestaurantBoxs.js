@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Card, CardItem, Body, Text, Icon ,View} from 'native-base';
+import { Card, CardItem, Body, Text, Icon ,View, Button,Spinner} from 'native-base';
+import { connect } from 'react-redux';
+import * as actionCreatores from './../../../actions';
 
 class RestaurantBoxs extends Component {
-
+    constructor(props) {
+        super(props);      
+        this.state = {
+         distanceLoading: false         
+        };
+    }
     _RatingFun() {
         let rating = [],
             ratingRes = Math.round(this.props.DataRestautant['rating']);
@@ -120,10 +127,46 @@ class RestaurantBoxs extends Component {
                             
  
                         </View>
+                        <Button style={{ 
+                            marginTop: 15, width: '100%', backgroundColor: "#fafafa",
+                            borderRadius: 4
+                        }} full light
+                        onPress={
+                            () => {
+                                this.setState({distanceLoading: true});                                
+                                const DataForRestautant = [{
+                                    name     : this.props.DataRestautant['name'],
+                                    address  : this.props.DataRestautant['vicinity'],
+                                    review   : this.props.DataRestautant['user_ratings_total'],
+                                    rating   : this.props.DataRestautant['rating'],
+                                    longitude: this.props.DataRestautant['geometry']['location']['lng'],
+                                    latitude : this.props.DataRestautant['geometry']['location']['lat'],
+                                }]                                        
+                                this.props.DataHospitalAction(DataForRestautant);
+                                setTimeout(()=>{
+                                    this.setState({distanceLoading: false}); // To Hidden Loading 
+                                    this.props.Navigation.navigate('MapDistance'); // Redirect To Page MapDistance
+                                },2000)
+                            }
+                        }> 
+                            <Text style={{
+                                textAlign: 'center', width: '100%', color: "#3498db", fontSize: 13
+                            }}>                            
+                                View Distance (Map)
+                            </Text>                            
+                            {(this.state.distanceLoading == false)? null : 
+                                <Spinner color="#3498db" size= {20} style={{right: 20, position: 'absolute'}}/> 
+                            }
+                        </Button>
                     </Body>
                 </CardItem>
             </Card>
         );
     }
 }
-export default RestaurantBoxs;
+function mapStateToProps(state){
+    return{
+        DetailsDataHospital: state.DetailsHospital
+    }
+}
+export default connect(mapStateToProps, actionCreatores)(RestaurantBoxs);

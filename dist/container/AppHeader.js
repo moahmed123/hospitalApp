@@ -37,7 +37,7 @@ class AppHeader extends Component {
                 </Title>
             </Body>
             {
-                (this.props.PageNamber== 1 || this.props.PageNamber == 2) ? null:
+                (this.props.PageNamber== 1 || this.props.PageNamber == 2 || this.props.PageNamber == 3) ? null:
                 <Right>
                     <Button transparent onPress={()=> this.props.Navigation.navigate('Filter')}>
                     <Icon name="dots-three-vertical" type="Entypo" />
