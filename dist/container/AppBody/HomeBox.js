@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Text, View, Content, Icon } from 'native-base';
-import { TouchableHighlight, BackHandler, PermissionsAndroid, ImageBackground} from 'react-native';
+import { TouchableHighlight, BackHandler, PermissionsAndroid, ImageBackground, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import * as actionCreatores from '../../actions';
 
@@ -17,6 +17,10 @@ class HomeBox extends Component {
     componentDidMount() {        
         {this._requestLocationPermission()}        
     }
+
+    componentWillUnmount(){
+        navigator.geolocation.clearWatch(this.watchID)
+    }
     // Fun Access Location
     _requestLocationPermission(){
         return new Promise(async() => {
@@ -30,13 +34,19 @@ class HomeBox extends Component {
                                 location: location,                                                        
                             });                      
                     },
-                    (error) => {alert(error.message)},
-                    {
-                        enableHighAccuracy: false,
-                        timeout: 20000,
-                        maximumAge: 3600000 
-                    }                    
-                );
+                    (error) => {                                                
+                        
+                        if(error.code == 3){
+                            Alert.alert(
+                                'Please Change Location Mode To ',
+                                ' GPS,Wi-fi and mobile networks or  Wi-fi and mobile networks and Reopen App' );                        
+                        }else{
+                            Alert.alert(error.message);
+                        }
+                        
+                    },
+                    {enableHighAccuracy: false, timeout: 2000, maximumAge: 3600000}
+                );                
             }
             else{
                 BackHandler.exitApp();
